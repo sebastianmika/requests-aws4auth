@@ -506,11 +506,11 @@ class AWS4Auth(AuthBase):
                           get_canonical_headers()
 
         """
-        url = urlparse(req.url)
+        url = urlparse(str(req.url))
         path = self.amz_cano_path(url.path)
         # AWS handles "extreme" querystrings differently to urlparse
         # (see post-vanilla-query-nonunreserved test in aws_testsuite)
-        split = req.url.split('?', 1)
+        split = str(req.url).split('?', 1)
         qs = split[1] if len(split) == 2 else ''
         qs = self.amz_cano_querystring(qs)
         payload_hash = req.headers['x-amz-content-sha256']
